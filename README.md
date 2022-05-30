@@ -11,7 +11,8 @@ npm install
 npm run start
 ```
 
-Install the plugin on `https://app.whiteboards.io/$YOURORG/access/config-plugins`
+Install the plugin on `https://app.whiteboards.io/$YOURORG/access/config-plugins` using the `http://localhost:3000` address.
+
 
 ### Deployment and Installation
 
