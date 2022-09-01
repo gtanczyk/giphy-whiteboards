@@ -2,15 +2,17 @@ import {Grid, SearchBar, SearchContext, SearchContextManager} from "@giphy/react
 import {createCards, getViewport, Viewport} from "@whiteboards-io/plugins";
 import {useContext} from "react";
 import styled from "styled-components"
+import Tabs, {TabsButtons} from "./Tabs";
 
 const API_KEY = process.env["REACT_APP_GIT_SHA"] || new URLSearchParams(window.location.search).get("apiKey") || "sXpGFDGZs0Dv1mmNFvYaGUvYwKX0PWIh"
 
 export default function Sidebar() {
-    return <>
-        <SearchContextManager apiKey={API_KEY}>
-            <Components/>
-        </SearchContextManager>
-    </>;
+    return <Tabs>
+        {(tabType) =>
+            <SearchContextManager apiKey={API_KEY} options={{type: tabType}}>
+                <Components/>
+            </SearchContextManager>}
+    </Tabs>;
 }
 
 const Components = () => {
@@ -21,6 +23,7 @@ const Components = () => {
             <SearchBarContainer>
                 <SearchBar autoFocus={true}/>
             </SearchBarContainer>
+            <TabsButtons />
             <GridContainer>
                 <Grid key={searchKey} columns={2} width={window.innerWidth - 20} fetchGifs={fetchGifs}
                       onGifClick={async (gif, event) => {
