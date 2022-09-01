@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 import styled from "styled-components";
 
-type TabType = "gifs" | "stickers";
+export type TabType = "gifs" | "stickers";
 
 const TabsContext = React.createContext<[TabType, (tabType: TabType) => void]>(["gifs", (tabType: TabType) => {
 }]);

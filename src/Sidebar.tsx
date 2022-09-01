@@ -2,7 +2,7 @@ import {Grid, SearchBar, SearchContext, SearchContextManager} from "@giphy/react
 import {createCards, getViewport, Viewport} from "@whiteboards-io/plugins";
 import {useContext} from "react";
 import styled from "styled-components"
-import Tabs, {TabsButtons} from "./Tabs";
+import Tabs, {TabsButtons, TabType} from "./Tabs";
 
 const API_KEY = process.env["REACT_APP_GIT_SHA"] || new URLSearchParams(window.location.search).get("apiKey") || "sXpGFDGZs0Dv1mmNFvYaGUvYwKX0PWIh"
 
@@ -10,12 +10,12 @@ export default function Sidebar() {
     return <Tabs>
         {(tabType) =>
             <SearchContextManager apiKey={API_KEY} options={{type: tabType}}>
-                <Components/>
+                <Components tabType={tabType}/>
             </SearchContextManager>}
     </Tabs>;
 }
 
-const Components = () => {
+const Components = ({tabType}: { tabType: TabType }) => {
     const {fetchGifs, searchKey} = useContext(SearchContext);
 
     return (
@@ -23,7 +23,7 @@ const Components = () => {
             <SearchBarContainer>
                 <SearchBar autoFocus={true}/>
             </SearchBarContainer>
-            <TabsButtons />
+            <TabsButtons/>
             <GridContainer>
                 <Grid key={searchKey} columns={2} width={window.innerWidth - 20} fetchGifs={fetchGifs}
                       onGifClick={async (gif, event) => {
@@ -38,6 +38,7 @@ const Components = () => {
                                   dataURL: gif.images.downsized.url + "#image/gif",
                                   originalWidth: gif.images.downsized.width,
                                   originalHeight: gif.images.downsized.height,
+                                  shadowDisabled: tabType === "stickers"
                               }
                           }])
                       }}
